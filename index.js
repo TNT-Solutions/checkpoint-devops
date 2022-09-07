@@ -21,16 +21,21 @@ app.use(logger('dev'));
 
 app.use(express.static(__dirname + '/public'));
 
-app.get('/', (req, res) => {
-    res.render('index.html')
-})
+// app.get('/', (req, res) => {
+//     res.render("index.html")
+// })
+
+app.post('/delete/api/', db.delUser)
+app.post('/update/api/', db.updUser)
+
+app.get('/', db.getUsers)
+app.get('/edit', db.getUsersEdit)
 
 
-app.get('/users', db.getUsers)
 app.get('/users/:id', db.getUserById)
 app.post('/cadastro', db.createUser)
 app.put('/users/:id', db.updateUser)
-app.delete('/users/:id', db.deleteUser)
+app.delete('/delete/:id', db.deleteUser)
 
 app.listen(3000, ()=>{
     console.log('listening on port 3000')

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Funcionários</title>
+    <link href="./public/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+    <div class="d-flex justify-content-center">
+        <div class="d-flex flex-column align-items-center align-self-center">
+            <div class="list-cards d-flex flex-row">
+                {% for user in users %}
+                <div class="card text-center">
+                    <div class="card-header">
+                      Cliente
+                    </div>
+                    <form action="/update/api/" method="post">
+                        <input type="hidden" name="reqDelete" value="{{user.id}}"/>
+                        <div class="card-body">
+                            <input type="text" value="{{user.name}}" required name="name">
+                            <input type="number" value="{{user.age}}" required name="age">
+                            <input type="email" value="{{user.email}}" required name="email">
+                            <input type="text" value="{{user.occupation}}" required name="occupation">
+                            <button class="btn btn-secondary">Atualizar</button>
+                          </div>
+                    </form>
+                  </div>
+                {%endfor%}
+            </div>
+        </div>
+        <a href="/">Voltar</a>
+    </div>
+
+    <style>
+
+        body{
+            background-color: rgb(219, 219, 219);
+            padding: 10px;
+        }
+
+        .list-cards{
+            margin-top: 20px;
+        }
+
+        .list-cards{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width:800px;
+        }
+
+        .card{
+            max-width:250px;
+            min-width:250px;
+            max-height: 350px;
+            min-height: 350px;
+        }
+
+      </style>
+
+</body>
+</html>

@@ -12,11 +12,24 @@ const pool = new Pool({
 })
 
 const getUsers = (request, response) => {
-  pool.query('SELECT * FROM users ORDER BY id ASC', (error, results) => {
+  pool.query('SELECT * FROM users', (error, results) => {
     if (error) {
       throw error
     }
-    response.status(200).json(results.rows)
+    //response.status(200).json(results.rows)
+    users = results.rows
+    return response.render("index.html", { users })
+  })
+}
+
+const getUsersEdit = (request, response) => {
+  pool.query('SELECT * FROM users', (error, results) => {
+    if (error) {
+      throw error
+    }
+    //response.status(200).json(results.rows)
+    users = results.rows
+    return response.render("edit.html", { users })
   })
 }
 
@@ -33,6 +46,7 @@ const getUserById = (request, response) => {
 
 const createUser = (request, response) => {
   const { name, age, email, occupation } = request.body
+  
   let id_phone = 2
   console.log(request.body)
   pool.query('INSERT INTO users (name, age, email, occupation, id_phone) VALUES ($1, $2, $3, $4, $5)', [name, age, email, occupation, id_phone] , (error, results) => {
@@ -60,6 +74,23 @@ const updateUser = (request, response) => {
   )
 }
 
+const updUser = (request, response) => {
+  const id = parseInt(request.body.reqDelete)
+  const { name, age, email, occupation } = request.body
+
+  pool.query(
+    'UPDATE users SET name = $1, age= $2,email = $3, occupation = $4 WHERE id = $5',
+    [name, age, email, occupation, id],
+    (error, results) => {
+      if (error) {
+        throw error
+      }
+      //response.status(200).send(`User modified with ID: ${id}`)
+      response.redirect('/')
+    }
+  )
+}
+
 const deleteUser = (request, response) => {
   const id = parseInt(request.params.id)
 
@@ -71,7 +102,22 @@ const deleteUser = (request, response) => {
   })
 }
 
+const delUser = (request, response) => {
+  const id = parseInt(request.body.reqDelete)
+
+  pool.query('DELETE FROM users WHERE id = $1', [id], (error, results) => {
+    if (error) {
+      throw error
+    }
+    //response.status(200).send(`User deleted with ID: ${id}`)
+    response.redirect('/')
+  })
+}
+
 module.exports = {
+  delUser,
+  updUser,
+  getUsersEdit,
   getUsers,
   getUserById,
   createUser,
