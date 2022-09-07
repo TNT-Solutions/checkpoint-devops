@@ -5,7 +5,7 @@
 
 ## Como rodar a aplicação?
 ```js
-    node index.js
+node index.js
 ```
 
 ## Integrantes
