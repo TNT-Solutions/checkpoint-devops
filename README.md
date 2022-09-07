@@ -5,6 +5,8 @@
 
 ## Como rodar a aplicação?
 ```js
+yarn install
+npm install
 node index.js
 ```
 
