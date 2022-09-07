@@ -12,7 +12,16 @@ const pool = new Pool({
 })
 
 const getUsers = (request, response) => {
-  pool.query('SELECT * FROM users', (error, results) => {
+  pool.query(`SELECT
+              u.id,
+              u.name,
+              u.age,
+              u.email,
+              u.occupation,
+              up.phone
+              FROM users u 
+              join users_phone up on u.id_phone = up.id
+              `, (error, results) => {
     if (error) {
       throw error
     }
@@ -23,7 +32,15 @@ const getUsers = (request, response) => {
 }
 
 const getUsersEdit = (request, response) => {
-  pool.query('SELECT * FROM users', (error, results) => {
+  pool.query(`SELECT
+                u.id,
+                u.name,
+                u.age,
+                u.email,
+                u.occupation,
+                up.phone
+                FROM users u 
+                join users_phone up on u.id_phone = up.id`, (error, results) => {
     if (error) {
       throw error
     }
